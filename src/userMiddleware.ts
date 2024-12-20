@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
-import { JWT_SECRET } from "./config";
+
 
 
 // Extend Express Request object to include userId
@@ -24,7 +24,7 @@ export const userMiddleware = (req: Request, res: Response, next: NextFunction) 
         const token = header.split(" ")[1];
 
        
-        const decoded = jwt.verify(token, JWT_SECRET) as JwtPayload;
+        const decoded = jwt.verify(token, process.env.JWT_SECRET) as JwtPayload;
 
         if (!decoded || !decoded.id) {
             res.status(403).json({
